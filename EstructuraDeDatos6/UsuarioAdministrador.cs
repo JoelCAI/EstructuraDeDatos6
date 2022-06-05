@@ -60,7 +60,7 @@ namespace EstructuraDeDatos6
 									   "\n [4] Crear Cliente Corporativo" +
 									   "\n [5] Crear Pedido" +
 									   "\n [6] Crear Factura" +
-									   "\n [7] Salir del Sistema.", 1, 6);
+									   "\n [7] Salir del Sistema.", 1, 7);
 
 				switch (opcion)
 				{
@@ -714,9 +714,8 @@ namespace EstructuraDeDatos6
 				Console.WriteLine("\n Id Pedido: " + pedido.Key);
 				Pedido pedidoValor = pedido.Value;
 
-
 				Console.WriteLine(" Cuit Cliente: " + pedidoValor.CuitClienteCorporativo);
-				Console.WriteLine(" Productos: " + pedidoValor.Item);
+				Console.WriteLine(" Productos: " + pedidoValor.Item[i].NombreProducto);
 
 			}
 
