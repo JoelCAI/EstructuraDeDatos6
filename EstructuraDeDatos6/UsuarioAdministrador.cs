@@ -402,10 +402,13 @@ namespace EstructuraDeDatos6
 						pedido.CalcularRecargo(tipodeRecargo);
 						pedido.CalcularTotalSinIVA();
 						AddPedido(pedido);
-						VerPedido();
+						
 						pedidoLista.Add(pedido.IdPedido, pedido);
 						VerPedidoDiccionario();
 						Console.WriteLine("Pedido registrado exitósamente");
+						VerPedido();
+						
+
 						Validador.VolverMenu();
 
 					}
@@ -652,13 +655,84 @@ namespace EstructuraDeDatos6
 				Console.Write("\t\t");
 				Console.Write(Pedido[i].CuitClienteCorporativo);
 				Console.Write("\t\t");
-                Console.Write(Pedido[i].Item[i].CodigoProducto);
-				Console.Write("\t\t");
-				Console.Write(Pedido[i].Item[i].NombreProducto);
-				Console.Write("\n");
+
+				foreach (Pedido pedido in Pedido)
+				{
+					foreach (Item item in pedido.Item)
+					{
+						Console.Write(Pedido[i].Item[i].CodigoProducto);
+						Console.Write("\t\t");
+						Console.Write(Pedido[i].Item[i].NombreProducto);
+						Console.Write("\n");
+					}
+
+				}
+				
 
 			}
 
+		}
+
+		public void VerPedidoCuenta()
+		{
+			
+			Console.Clear();
+			Console.WriteLine("Pedidos del día");
+			Console.WriteLine("#\tSubTototal.\tRecargo.\tTotal");
+			for (int i = 0; i < Pedido.Count; i++)
+			{
+				Console.Write(i + 1);
+				Console.Write("\t");
+				Console.Write(Pedido[i].SubTotal);
+				Console.Write("\t");
+				Console.Write(Pedido[i].Recargo);
+				Console.Write("\t");
+				Console.Write(Pedido[i].TotalSinIva);
+				Console.Write("\n");
+			}
+
+			decimal totalCobradoSinIVA = 0;
+			int cantidadProductos = 0;
+			int cantidadRecargos = 0;
+			decimal totalRecargos = 0;
+
+			/* Los Pedidos realizados estan en la lista de Pedidos así que recorremos esa lista */
+			foreach (Pedido pedido in Pedido)
+			{
+				totalCobradoSinIVA = totalCobradoSinIVA + pedido.TotalSinIva;
+			}
+
+			/* cantidad de Pedidos emitidos */
+			foreach (Pedido pedido in Pedido)
+			{
+				foreach (Item item in pedido.Item)
+				{
+					cantidadProductos = cantidadProductos + item.CantidadProducto;
+				}
+
+			}
+			/* Cantidad de Recargos aplicados */
+			foreach (Pedido pedido in Pedido)
+			{
+				if (pedido.Recargo > 0)
+				{
+					cantidadRecargos = cantidadRecargos + 1;
+				}
+			}
+			/* Total de Recargos aplicados */
+			foreach (Pedido pedido in Pedido)
+			{
+				if (pedido.Recargo > 0)
+				{
+					totalRecargos = totalRecargos + pedido.Recargo;
+				}
+			}
+			Console.WriteLine("Total cobrado sin IVA: " + totalCobradoSinIVA.ToString());
+			Console.WriteLine("Cantidad de productos vendidos: " + cantidadProductos.ToString());
+			Console.WriteLine("Cantidad de Recargos aplicados: " + cantidadRecargos.ToString());
+			Console.WriteLine("Total de Recargos aplicados: " + totalRecargos.ToString());
+
+			Console.ReadLine();
 		}
 
 		public void VerProductoDiccionario()
